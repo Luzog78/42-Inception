@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/30 17:36:38 by ysabik            #+#    #+#              #
-#    Updated: 2024/04/30 19:24:05 by ysabik           ###   ########.fr        #
+#    Updated: 2024/04/30 19:42:29 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,4 +105,4 @@ endef
 # **************************************************************************** #
 
 
-.PHONY: all up down ps images volume network ls re clean
+.PHONY: all up down ps images volume network ls nginx mariadb wordpress logs re clean
