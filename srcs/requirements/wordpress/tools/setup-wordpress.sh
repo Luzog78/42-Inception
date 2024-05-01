@@ -1,5 +1,8 @@
 #!/bin/bash
-sleep 10
+while ! mariadb -h mariadb -u$SQL_USER -p$SQL_PASSWORD <<< "SHOW databases;" &>/dev/null; do
+	echo "Waiting for mariadb..."
+	sleep 1
+done
 
 cd /var/www/html/
 if [ ! -f wp-config.php ]; then
