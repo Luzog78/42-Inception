@@ -16,8 +16,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    secrets:
-      - inception_secrets
+      - ../secrets
     restart: unless-stopped
 
   nginx:
@@ -35,8 +34,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    secrets:
-      - inception_secrets
+      - ../secrets
     restart: on-failure
 
   wordpress:
@@ -52,8 +50,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    secrets:
-      - inception_secrets
+      - ../secrets
     restart: on-failure
 
 
@@ -84,12 +81,3 @@ volumes:
 networks:
   inception:
     driver: bridge
-
-
-#############
-## Secrets ##
-#############
-
-secrets:
-  inception_secrets:
-    file: ../secrets
