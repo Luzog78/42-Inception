@@ -92,4 +92,4 @@ networks:
 
 secrets:
   inception_secrets:
-    file: secrets
+    file: ../secrets
