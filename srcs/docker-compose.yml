@@ -1,3 +1,7 @@
+##############
+## Services ##
+##############
+
 services:
   mariadb:
     container_name: mariadb
@@ -12,7 +16,10 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    secrets:
+      - inception_secrets
     restart: unless-stopped
+
   nginx:
     container_name: nginx
     networks:
@@ -28,7 +35,10 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    secrets:
+      - inception_secrets
     restart: on-failure
+
   wordpress:
     container_name: wordpress
     networks:
@@ -42,7 +52,15 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    secrets:
+      - inception_secrets
     restart: on-failure
+
+
+#############
+## Volumes ##
+#############
+
 volumes:
   mariadb:
     driver: local
@@ -50,12 +68,28 @@ volumes:
       type: none
       o: bind
       device: ~/data/mariadb
+
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ~/data/wordpress
+
+
+##############
+## Networks ##
+##############
+
 networks:
   inception:
     driver: bridge
+
+
+#############
+## Secrets ##
+#############
+
+secrets:
+  inception_secrets:
+    file: secrets
