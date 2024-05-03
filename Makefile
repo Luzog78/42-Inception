@@ -6,12 +6,13 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/30 17:36:38 by ysabik            #+#    #+#              #
-#    Updated: 2024/04/30 19:42:29 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/03 14:54:32 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 COMPOSE_FILE	=	srcs/docker-compose.yml
+DOMAIN_NAME	=	ysabik.42.fr
 
 
 RESET			=	\033[0m
@@ -32,7 +33,8 @@ up:
 	@mkdir -p ~/data/wordpress
 	@echo "$(RED)$$> $(MAGENTA)docker compose -f $(COMPOSE_FILE) up -d --build$(RESET)"
 	@docker compose -f $(COMPOSE_FILE) up -d --build
-	@echo "$(DIM)Running on https://localhost/$(RESET)"
+	@$(call host)
+	@echo "$(DIM)Running on https://$(DOMAIN_NAME)/$(RESET)"
 	@echo "$(GREEN)[[ Docker Compose UP ! ]]$(RESET)"
 
 down:
@@ -86,6 +88,13 @@ clean:
 	$(call exec, rm -rf ~/data/wordpress/*, $$(ls -A ~/data/wordpress 2>/dev/null))
 
 	@echo "$(GREEN)[[ Docker PURGED ! ]]$(RESET)"
+
+
+define host
+	@if [ -z "$$(cat /etc/hosts | grep '$(DOMAIN_NAME)')" ]; then \
+		echo 127.0.0.1 $(DOMAIN_NAME) >> /etc/hosts; \
+	fi;
+endef
 
 
 define exec
