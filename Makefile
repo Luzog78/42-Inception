@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/30 17:36:38 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/03 14:54:32 by ysabik           ###   ########.fr        #
+#    Updated: 2024/06/21 16:20:55 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,10 @@ wordpress:
 	@echo "$(RED)$$> $(MAGENTA)docker exec -it wordpress bash$(RESET)"
 	@docker exec -it wordpress bash
 
+redis:
+	@echo "$(RED)$$> $(MAGENTA)docker exec -it redis bash$(RESET)"
+	@docker exec -it redis bash
+
 logs:
 	@echo "$(RED)$$> $(MAGENTA)docker compose -f $(COMPOSE_FILE) logs -f$(RESET)"
 	@docker compose -f $(COMPOSE_FILE) logs -f
@@ -114,4 +118,4 @@ endef
 # **************************************************************************** #
 
 
-.PHONY: all up down ps images volume network ls nginx mariadb wordpress logs re clean
+.PHONY: all up down ps images volume network ls nginx mariadb wordpress redis logs re clean

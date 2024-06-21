@@ -53,6 +53,26 @@ services:
       - ../secrets
     restart: on-failure
 
+  ### BONUS PART ###
+
+  redis:
+    container_name: redis
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/var/www/html
+    ports:
+      - "6379:6379"
+    build:
+      context: requirements/bonus/redis
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+      - ../secrets
+    restart: on-failure
+
 
 #############
 ## Volumes ##
