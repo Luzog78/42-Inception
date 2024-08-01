@@ -65,7 +65,7 @@ services:
     restart: on-failure
     expose:
       - 6379
-  
+
   adminer:
     container_name: adminer
     env_file:

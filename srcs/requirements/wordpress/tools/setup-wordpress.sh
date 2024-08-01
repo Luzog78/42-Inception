@@ -43,14 +43,19 @@ if [ ! -f wp-config.php ]; then
 	wp config set WP_REDIS_CLIENT phpredis \
 						--allow-root --path='/var/www/html'
 
-	wp plugin install wp-redis \
+	wp plugin install redis-cache --activate \
 						--allow-root --path='/var/www/html'
-	sed -i 's/127.0.0.1/redis/g' wp-content/plugins/wp-redis/object-cache.php
-	wp plugin activate wp-redis \
-						--allow-root --path='/var/www/html'
+	# sed -i 's/127.0.0.1/redis/g' wp-content/plugins/wp-redis/object-cache.php
+	# wp plugin activate wp-redis \
+	# 					--allow-root --path='/var/www/html'
 
 	wp plugin update --all \
 						--allow-root --path='/var/www/html'
+	wp redis enable \
+						--allow-root --path='/var/www/html'
+
+	mkdir -p /run/php/
+	chmod 777 -R wp-content/
 fi
 
 $@
