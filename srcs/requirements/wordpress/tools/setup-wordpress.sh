@@ -13,7 +13,7 @@ if [ ! -f wp-config.php ]; then
 						--dbpass=$SQL_PASSWORD \
 						--dbhost=mariadb:3306 --path='/var/www/html'
 	wp core install		--allow-root \
-						--url=$WP_URL \
+						--url=$FULL_URL \
 						--title=$WP_TITLE \
 						--admin_user=$WP_ADMIN_NAME \
 						--admin_email=$WP_ADMIN_EMAIL \
@@ -37,7 +37,7 @@ if [ ! -f wp-config.php ]; then
 	wp config set WP_CACHE true --raw \
 						--allow-root --path='/var/www/html'
 
-	wp config set WP_CACHE_KEY_SALT $LOGIN_42'.'$URL_DOMAIN \
+	wp config set WP_CACHE_KEY_SALT $FULL_URL \
 						--allow-root --path='/var/www/html'
 
 	wp config set WP_REDIS_CLIENT phpredis \

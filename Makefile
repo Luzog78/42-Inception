@@ -6,13 +6,14 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/30 17:36:38 by ysabik            #+#    #+#              #
-#    Updated: 2024/06/21 16:20:55 by ysabik           ###   ########.fr        #
+#    Updated: 2024/08/01 19:01:16 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+include srcs/.env
+
 
 COMPOSE_FILE	=	srcs/docker-compose.yml
-DOMAIN_NAME	=	ysabik.42.fr
 
 
 RESET			=	\033[0m
@@ -34,7 +35,7 @@ up:
 	@echo "$(RED)$$> $(MAGENTA)docker compose -f $(COMPOSE_FILE) up -d --build$(RESET)"
 	@docker compose -f $(COMPOSE_FILE) up -d --build
 	@$(call host)
-	@echo "$(DIM)Running on https://$(DOMAIN_NAME)/$(RESET)"
+	@echo "$(DIM)Running on https://$(FULL_URL)/$(RESET)"
 	@echo "$(GREEN)[[ Docker Compose UP ! ]]$(RESET)"
 
 down:
@@ -72,9 +73,25 @@ wordpress:
 	@echo "$(RED)$$> $(MAGENTA)docker exec -it wordpress bash$(RESET)"
 	@docker exec -it wordpress bash
 
+adminer:
+	@echo "$(RED)$$> $(MAGENTA)docker exec -it adminer bash$(RESET)"
+	@docker exec -it adminer bash
+
+cookies:
+	@echo "$(RED)$$> $(MAGENTA)docker exec -it cookies bash$(RESET)"
+	@docker exec -it cookies bash
+
+ftp:
+	@echo "$(RED)$$> $(MAGENTA)docker exec -it ftp bash$(RESET)"
+	@docker exec -it ftp bash
+
 redis:
 	@echo "$(RED)$$> $(MAGENTA)docker exec -it redis bash$(RESET)"
 	@docker exec -it redis bash
+
+squid:
+	@echo "$(RED)$$> $(MAGENTA)docker exec -it squid bash$(RESET)"
+	@docker exec -it squid bash
 
 logs:
 	@echo "$(RED)$$> $(MAGENTA)docker compose -f $(COMPOSE_FILE) logs -f$(RESET)"
@@ -95,8 +112,8 @@ clean:
 
 
 define host
-	@if [ -z "$$(cat /etc/hosts | grep '$(DOMAIN_NAME)')" ]; then \
-		echo 127.0.0.1 $(DOMAIN_NAME) >> /etc/hosts; \
+	@if [ -z "$$(cat /etc/hosts | grep '$(FULL_URL)')" ]; then \
+		echo 127.0.0.1 $(FULL_URL) >> /etc/hosts; \
 	fi;
 endef
 
@@ -118,4 +135,4 @@ endef
 # **************************************************************************** #
 
 
-.PHONY: all up down ps images volume network ls nginx mariadb wordpress redis logs re clean
+.PHONY: all up down ps images volume network ls nginx mariadb wordpress adminer cookies ftp redis squid logs re clean
