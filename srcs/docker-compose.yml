@@ -103,10 +103,10 @@ services:
       - "20:20"
       - "21:21"
   
-  pong:
-    container_name: pong
+  cookies:
+    container_name: cookies
     build:
-      context: requirements/bonus/pong
+      context: requirements/bonus/cookies
       dockerfile: Dockerfile
     volumes:
       - wordpress:/var/www/html
