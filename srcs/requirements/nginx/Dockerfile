@@ -6,11 +6,11 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/30 05:41:55 by ysabik            #+#    #+#              #
-#    Updated: 2024/04/30 19:34:56 by ysabik           ###   ########.fr        #
+#    Updated: 2024/08/01 19:13:45 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	debian:bookworm
+FROM	debian:bullseye
 
 RUN		apt-get update
 

@@ -6,11 +6,11 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/01 15:19:37 by ysabik            #+#    #+#              #
-#    Updated: 2024/08/01 15:20:34 by ysabik           ###   ########.fr        #
+#    Updated: 2024/08/01 19:13:45 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM debian:bookworm
+FROM debian:bullseye
 
 RUN apt update -y
 RUN apt install -y vsftpd
