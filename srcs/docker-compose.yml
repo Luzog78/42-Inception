@@ -57,21 +57,73 @@ services:
 
   redis:
     container_name: redis
-    networks:
-      - inception
-    depends_on:
-      - wordpress
-    volumes:
-      - wordpress:/var/www/html
-    ports:
-      - "6379:6379"
     build:
       context: requirements/bonus/redis
       dockerfile: Dockerfile
+    networks:
+      - inception
+    restart: on-failure
+    expose:
+      - 6379
+  
+  adminer:
+    container_name: adminer
     env_file:
       - .env
       - ../secrets
+    depends_on:
+      - mariadb
+    build:
+      context: requirements/bonus/adminer
+      dockerfile: Dockerfile
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/html
     restart: on-failure
+    expose:
+      - 9000
+
+  ftp:
+    container_name: ftp
+    env_file:
+      - .env
+      - ../secrets
+    depends_on:
+      - wordpress
+    build:
+      context: requirements/bonus/ftp
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    restart: on-failure
+    ports:
+      - "20:20"
+      - "21:21"
+  
+  pong:
+    container_name: pong
+    build:
+      context: requirements/bonus/pong
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    restart: on-failure
+    ports:
+      - "8080:8080"
+  
+  squid:
+    container_name: squid
+    build:
+      context: requirements/bonus/squid
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "8888:8888"
 
 
 #############

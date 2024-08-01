@@ -1,4 +1,5 @@
 #!/bin/bash
+
 while ! mariadb -h mariadb -u$SQL_USER -p$SQL_PASSWORD <<< "SHOW databases;" &>/dev/null; do
 	echo "Waiting for mariadb..."
 	sleep 1
@@ -33,21 +34,22 @@ if [ ! -f wp-config.php ]; then
 	wp config set WP_REDIS_PORT 6379 --raw \
 						--allow-root --path='/var/www/html'
 
-	wp config set WP_CACHE_KEY_SALT $LOGIN_42'.'$URL_DOMAIN \
+	wp config set WP_CACHE true --raw \
 						--allow-root --path='/var/www/html'
 
-	#wp config set WP_REDIS_PASSWORD $REDIS_PASSWORD --allow-root
+	wp config set WP_CACHE_KEY_SALT $LOGIN_42'.'$URL_DOMAIN \
+						--allow-root --path='/var/www/html'
 
 	wp config set WP_REDIS_CLIENT phpredis \
 						--allow-root --path='/var/www/html'
 
-	wp plugin install redis-cache --activate \
+	wp plugin install wp-redis \
+						--allow-root --path='/var/www/html'
+	sed -i 's/127.0.0.1/redis/g' wp-content/plugins/wp-redis/object-cache.php
+	wp plugin activate wp-redis \
 						--allow-root --path='/var/www/html'
 
 	wp plugin update --all \
-						--allow-root --path='/var/www/html'
-
-	wp redis enable \
 						--allow-root --path='/var/www/html'
 fi
 

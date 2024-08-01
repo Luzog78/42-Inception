@@ -5,18 +5,21 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/01 15:21:28 by ysabik            #+#    #+#              #
-#    Updated: 2024/08/01 15:21:59 by ysabik           ###   ########.fr        #
+#    Created: 2024/08/01 15:16:03 by ysabik            #+#    #+#              #
+#    Updated: 2024/08/01 15:34:19 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:bookworm
 
 RUN apt update -y
-RUN apt install -y redis-server php8.2-redis
+RUN apt install -y wget php-fpm php-mysql
 
-COPY conf/redis.conf /etc/redis/
+COPY conf/php-fpm-pool.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY tools/setup-adminer.sh /usr/sbin/
 
-EXPOSE 6379
+EXPOSE 9000
 
-CMD ["redis-server"]
+ENTRYPOINT ["bash", "/usr/sbin/setup-adminer.sh"]
+
+CMD ["/usr/sbin/php-fpm8.2", "-F"]
